@@ -1,9 +1,15 @@
 import streamlit as st
 
+st.set_page_config(
+    initial_sidebar_state="expanded",
+    page_title="Meet the Team",
+    page_icon="https://www.crick.ac.uk/sites/default/files/styles/media_main_column_small/public/2018-06/Francs%20Crick%20logo.png?itok=HJG_g-Hn",
+)
+
 st.title("Meet The Team")
 
 st.markdown(
-    """We are a group of students who are passionate about data science."""
+    """We are a group of scientists who are passionate about data science."""
 )
 
 row_1 = st.container()
@@ -92,7 +98,7 @@ with row_2_col_1:
 
 with row_2_col_2:
     st.image("images/the_team/spencer_duvwiama.jpg")
-    st.write("Sepencer Duvwiama")
+    st.write("Spencer Duvwiama")
     st.markdown(
         '<a href="https://www.linkedin.com/in/spencerduvwiama/">LinkedIn</a>',
         unsafe_allow_html=True,
