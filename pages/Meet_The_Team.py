@@ -1,5 +1,11 @@
 import streamlit as st
 
+st.set_page_config(
+    initial_sidebar_state="expanded",
+    page_title="Meet the Team",
+    page_icon="https://www.crick.ac.uk/sites/default/files/styles/media_main_column_small/public/2018-06/Francs%20Crick%20logo.png?itok=HJG_g-Hn",
+)
+
 st.title("Meet The Team")
 
 st.markdown(
