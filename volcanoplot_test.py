@@ -4,7 +4,7 @@ from Home import load_data
 from helper_functions.volcano_plot import volcano_plot
  
 test_filename_list = [
-    "mock_data/mock_proteomics_data.csv",
+    "mock_data/mock_proteomics_data_time.csv",
 ]
  
 for filename in test_filename_list:
