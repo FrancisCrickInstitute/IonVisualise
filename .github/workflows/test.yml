@@ -36,4 +36,8 @@ jobs:
       run: |
         conda activate data_visualisation
         python volcanoplot_test.py
+    - name: Time Series Plot Test
+      run: |
+        conda activate data_visualisation
+        python timeseries_test.py
  
