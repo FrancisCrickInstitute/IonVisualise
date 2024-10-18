@@ -1,89 +1,95 @@
 
-# Data Visualization App
+# IonVisualise
 
-This repository contains a data visualization app built using Streamlit. It provides interactive tools for visualizing data, including PCA plots, scatter plots with smooth lines, and volcano plots. The app is modular, with each visualization function located in a separate Python file under the `helper_functions` directory.
+Welcome to the **IonVisualise**! This app is designed to help you visualize and analyze data from various sources, including PCA plots, scatter plots, volcano plots, and time series. The app provides a simple interface for uploading data files and generating intuitive and interactive visualizations.
 
-## Directory Structure
+## Features
 
+- **PCA (Principal Component Analysis) Plot:** Visualize data using PCA, helping you understand variance and relationships in high-dimensional datasets.
+- **Scatter Plot with Smooth Lines:** Generate scatter plots with LOWESS smoothing lines to capture trends in your data.
+- **Volcano Plot:** Perform differential expression analysis with volcano plots, marking significant data points.
+- **Time Series Plot:** Track changes in data over time with interactive time series plots.
+- **Team Introduction Page:** Meet the team behind the app on the "Meet the Team" page.
+
+## Project Directory Structure
+
+```plaintext
+./
+├── helper_functions
+│   ├── __init__.py              # Helper functions initializer
+│   ├── file_operations.py       # File operation functions (e.g., removing old files)
+│   ├── pca.py                   # PCA plot generation functions
+│   ├── scatterplot.py           # Scatter plot generation functions
+│   ├── timeseries.py            # Time series plot generation functions
+│   └── volcano_plot.py          # Volcano plot generation functions
+├── pages
+│   └── Meet_The_Team.py         # Introduction of the team
+├── environment.yaml             # Conda environment configuration
+└── Home.py                      # Main script to run the app
 ```
-└── ./
-    ├── helper_functions
-    │   ├── __init__.py           # Initialization for helper functions package
-    │   ├── pca.py                # PCA plot functionality
-    │   ├── scatterplot.py        # Scatter plot with smooth line functionality
-    │   └── volcano_plot.py       # Volcano plot functionality
-    └── Home.py                   # Main Streamlit app entry point
+
+## Installation Instructions
+
+This app runs in a Conda environment. Follow the steps below to set it up on your local machine.
+
+### 1. Install Anaconda (if you don't have it already)
+
+Download and install Anaconda from [https://www.anaconda.com/products/individual](https://www.anaconda.com/products/individual).
+
+### 2. Clone the Repository
+
+```bash
+git clone git@github.com:IonVisualisation/IonVisualise.git
+cd IonVisualise
 ```
 
-### Files Description
+### 3. Create the Conda Environment
 
-#### 1. `/helper_functions/__init__.py`
-This file initializes the `helper_functions` module, which contains all the data visualization tools.
+To set up the environment, use the `environment.yaml` file provided. This will create a Conda environment with all the required dependencies for the app.
 
-#### 2. `/helper_functions/pca.py`
-This module provides a function to generate a Principal Component Analysis (PCA) plot from a given CSV file.
+```bash
+conda env create -f environment.yaml
+```
 
-- **Function:** `pca_plot(dataframe: pd.DataFrame, n_components: int = 2)`
-  - **Input:** Pandas DataFrame with numerical data, number of principal components to calculate.
-  - **Output:** PCA scatter plot showing the first two principal components.
-  
-#### 3. `/helper_functions/scatterplot.py`
-This module provides a function to generate a scatter plot with smooth lines using LOWESS smoothing.
+This will create an environment named `data_visualisation` with Python 3.12 and all the necessary packages.
 
-- **Function:** `scatter_with_smooth_lines(dataframe: pd.DataFrame, x_col: str, y_col: str, frac: float = 0.3)`
-  - **Input:** Pandas DataFrame, column names for x and y axes, and the smoothing fraction for LOWESS.
-  - **Output:** Scatter plot with a smooth line fitted to the data.
+### 4. Activate the Environment
 
-#### 4. `/helper_functions/volcano_plot.py`
-This module provides a function to generate a volcano plot, a common visualization in bioinformatics.
+Once the environment is created, activate it using:
 
-- **Function:** `volcano_plot(dataframe: pd.DataFrame, fold_change_col: str, p_value_col: str, threshold_fc: float = 1.0, threshold_pval: float = 0.05)`
-  - **Input:** Pandas DataFrame with fold change and p-value columns, thresholds for fold change and p-value.
-  - **Output:** Volcano plot highlighting upregulated and downregulated genes or proteins.
+```bash
+conda activate data_visualisation
+```
 
-#### 5. `/Home.py`
-This is the main entry point for the Streamlit app. It integrates the helper functions from the `helper_functions` module to create an interactive web-based application.
+### 5. Run the App
 
-- **Usage:** Users can upload CSV files for visualizing data through PCA plots, scatter plots, or volcano plots. The app automatically generates the corresponding plot after the file upload and required inputs.
+With the environment activated, you can now run the Streamlit app using the following command:
 
-## Setup Instructions
+```bash
+streamlit run Home.py
+```
 
-### 1. Install the required dependencies:
-You can use `conda` to create an isolated environment for this project.
+The app should open in your web browser. If it doesn't, navigate to `http://localhost:8501` in your browser.
 
-1. **Create a new conda environment:**
+### 6. Usage
 
-   ```bash
-   conda env create -f environment.yaml
-   ```
+- **Upload Data:** Upload `.csv`, `.txt`, or `.xls` files to visualize.
+- **Navigate Pages:** Use the navigation buttons at the top of the app to explore different visualizations (PCA, Volcano Plot, Scatter Plot, Time Series).
+- **Meet the Team:** Visit the "Meet The Team" page to learn more about the app creators.
 
-2. **Activate the environment:**
+## Troubleshooting
 
-   ```bash
-   conda activate data_visualisation
-   ```
-
-### 2. Run the Streamlit App:
-   To launch the app, navigate to the project directory and run:
-
-   ```bash
-   streamlit run Home.py
-   ```
-
-### 3. Upload your data:
-   - PCA Plot: Upload a CSV, txt or xls file containing numerical data.
-   - Scatter Plot: Upload a CSV, txt or xls file and specify the columns for x and y axes.
-   - Volcano Plot: Upload a CSV, txt or xls file and specify columns for fold change and p-values.
-
-### 4. Explore your plots:
-   Once the file is uploaded, you can interact with the plots and visualize your data in various ways.
+- If you encounter an issue with missing packages, make sure the Conda environment is activated (`conda activate data_visualisation`).
+- For issues with specific visualizations, ensure the uploaded data files are formatted correctly (e.g., proper column headers for Volcano and PCA plots).
 
 ## Contributing
-Contributions are welcome! If you have any suggestions or would like to add new visualizations, feel free to open an issue or submit a pull request.
+
+If you'd like to contribute to the project, feel free to submit pull requests or open issues. We welcome all contributions that improve the functionality, design, or performance of the app.
 
 ## License
+
 This project is licensed under the MIT License.
 
 ---
 
-Enjoy exploring your data with this easy-to-use visualization app!
+Thank you for using the **IonVisualise**! We hope this tool helps streamline your data analysis workflows.
