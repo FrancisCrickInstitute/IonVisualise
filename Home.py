@@ -239,7 +239,12 @@ def main():
 
     # If there are no files in session state and user tries to access another page
     if st.session_state.nav_state == "Home":
-        homePage()
+        try:
+            homePage()
+        except Exception:
+            st.write(
+                "Oops! Something went wrong. Please let us know on GitHub!"
+            )
     elif (
         st.session_state.nav_state
         in ["PCA", "Volcano", "Scatter", "TimeSeries"]
@@ -247,13 +252,33 @@ def main():
         wholepage.warning("Please upload data to proceed")
     else:
         if st.session_state.nav_state == "PCA":
-            PCAPage(st.session_state.file_paths)
+            try:
+                PCAPage(st.session_state.file_paths)
+            except Exception:
+                st.write(
+                    "Oops! Something went wrong. Please let us know on GitHub!"
+                )
         elif st.session_state.nav_state == "Volcano":
-            volcanoPage(st.session_state.file_paths)
+            try:
+                volcanoPage(st.session_state.file_paths)
+            except Exception:
+                st.write(
+                    "Oops! Something went wrong. Please let us know on GitHub!"
+                )
         elif st.session_state.nav_state == "Scatter":
-            scatterPage(st.session_state.file_paths)
+            try:
+                scatterPage(st.session_state.file_paths)
+            except Exception:
+                st.write(
+                    "Oops! Something went wrong. Please let us know on GitHub!"
+                )
         elif st.session_state.nav_state == "TimeSeries":
-            timeseriesPage(st.session_state.file_paths)
+            try:
+                timeseriesPage(st.session_state.file_paths)
+            except Exception:
+                st.write(
+                    "Oops! Something went wrong. Please let us know on GitHub!"
+                )
 
 
 main()
