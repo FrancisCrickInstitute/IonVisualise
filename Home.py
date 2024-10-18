@@ -11,7 +11,11 @@ from helper_functions import timeseries_plot as ts
 from helper_functions import volcano_plot as vp
 from helper_functions.file_operations import remove_old_files
 
-st.set_page_config(initial_sidebar_state="expanded")
+st.set_page_config(
+    initial_sidebar_state="expanded",
+    page_title="IonVisualise",
+    page_icon="https://www.crick.ac.uk/sites/default/files/styles/media_main_column_small/public/2018-06/Francs%20Crick%20logo.png?itok=HJG_g-Hn",
+)
 st.sidebar.image(
     "https://www.crick.ac.uk/sites/default/files/styles/media_main_column_small/public/2018-06/Francs%20Crick%20logo.png?itok=HJG_g-Hn"
 )
@@ -39,7 +43,10 @@ if "file_paths" not in st.session_state:
     st.session_state.file_paths = []  # To store local file paths
 
 if "metadata_file_path" not in st.session_state:
-    st.session_state.metadata_file_path = None  # To store the metadata file path
+    st.session_state.metadata_file_path = (
+        None  # To store the metadata file path
+    )
+
 
 def stream_data(text):
     for word in text.split(" "):
@@ -66,6 +73,7 @@ def convert_csv(uploaded_files):
         df.to_csv(csv_file, index=False)
         new_files.append(csv_file)
     return new_files
+
 
 def load_metadata():
     """Load metadata from the saved local file."""
@@ -147,7 +155,9 @@ def homePage():
         # If files are uploaded, display them with an option to remove
         if st.session_state.uploaded_metadata:
             wholepage.success("Files uploaded:")
-            for i, uploaded_file in enumerate(st.session_state.uploaded_metadata):
+            for i, uploaded_file in enumerate(
+                st.session_state.uploaded_metadata
+            ):
                 col3, col4 = wholepage.columns([8, 1])
                 col3.write(uploaded_file)
                 # Add an "X" button to remove the file and reset the app
@@ -158,6 +168,8 @@ def homePage():
                     )
                     os.remove(f"temp_files/{uploaded_file}")
                     st.rerun()
+
+
 def load_data(file_path):
     """Load data from the saved local file."""
     if file_path.endswith(".csv"):
@@ -260,7 +272,9 @@ def timeseriesPage(file_paths):
     with wholepage:
         with st.sidebar:
             # Select a protein from the unique protein IDs in the DataFrame
-            selected_protein = st.selectbox("Select protein", df["Protein_ID"].unique())
+            selected_protein = st.selectbox(
+                "Select protein", df["Protein_ID"].unique()
+            )
             st.write(f"Selected protein: {selected_protein}")
 
     # Filter DataFrame to include only the selected protein
@@ -268,6 +282,7 @@ def timeseriesPage(file_paths):
     print(filtered_df)
     # Use filtered DataFrame for the scatter plot
     ts.timeseries_plot(filtered_df, selected_protein)
+
 
 def main():
     nav1, nav2, nav3, nav4, nav5 = wholepage.columns(5)
