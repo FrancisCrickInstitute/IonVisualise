@@ -39,16 +39,17 @@ def convert_csv(uploaded_files):
     new_files = []
     for file in uploaded_files:
         if file.name.endswith(".csv"):
-            new_files.append(".csv")
-            continue
+            df = pd.read_csv(file)
+            csv_file = f"temp_files/{file.name}"
 
-        if file.name.endswith(".xls"):
-            df = pd.read_excel(file)
+        else:
+            if file.name.endswith(".xls"):
+                df = pd.read_excel(file)
 
-        if file.name.endswith(".txt"):
-            df = pd.read_csv(file, delimiter="\t")
+            if file.name.endswith(".txt"):
+                df = pd.read_csv(file, delimiter="\t")
 
-        csv_file = f"temp_files/{Path(file.name).stem}.csv"
+            csv_file = f"temp_files/{Path(file.name).stem}.csv"
 
         df.to_csv(csv_file, index=False)
         new_files.append(csv_file)
