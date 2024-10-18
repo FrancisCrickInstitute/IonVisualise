@@ -8,6 +8,7 @@ import streamlit as st
 from helper_functions import pca
 from helper_functions import scatterplot as sc
 from helper_functions import volcano_plot as vp
+from helper_functions.file_operations import remove_old_files
 
 st.set_page_config(initial_sidebar_state="expanded")
 
@@ -15,6 +16,8 @@ st.set_page_config(initial_sidebar_state="expanded")
 temp_dir = "temp_files"
 if not os.path.exists(temp_dir):
     os.makedirs(temp_dir)
+
+remove_old_files()
 
 wholepage = st.container()
 
