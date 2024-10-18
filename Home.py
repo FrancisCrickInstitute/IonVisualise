@@ -7,6 +7,7 @@ import streamlit as st
 
 from helper_functions import pca
 from helper_functions import scatterplot as sc
+from helper_functions import timeseries_plot as ts
 from helper_functions import volcano_plot as vp
 from helper_functions.file_operations import remove_old_files
 
@@ -249,18 +250,21 @@ def scatterPage(file_paths):
 def timeseriesPage(file_paths):
     wholepage.title("_Timeseries plot_")
 
-    file_paths = [f"{Path(file).stem}" for file in file_paths]
-    selected_data = st.selectbox("Select Dataset", file_paths)
+    for file_path in file_paths:
+        wholepage.write(os.path.basename(file_path))
+        df = load_data(file_path)
 
-    wholepage.write(f":blue[{os.path.basename(Path(selected_data).stem)}]")
-    df = load_data(f"temp_files/{selected_data}.csv")
-
-    proteins = df.iloc[:, 0].to_numpy()
     with wholepage:
         with st.sidebar:
-            selected_protein = st.selectbox("Select protein", proteins)
+            # Select a protein from the unique protein IDs in the DataFrame
+            selected_protein = st.selectbox("Select protein", df["Protein_ID"].unique())
             st.write(f"Selected protein: {selected_protein}")
 
+    # Filter DataFrame to include only the selected protein
+    filtered_df = df[df["Protein_ID"] == selected_protein]
+    print(filtered_df)
+    # Use filtered DataFrame for the scatter plot
+    ts.timeseries_plot(filtered_df, selected_protein)
 
 def main():
     nav1, nav2, nav3, nav4, nav5 = wholepage.columns(5)
