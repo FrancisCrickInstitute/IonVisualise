@@ -16,6 +16,7 @@ jobs:
       shell: sh
       run: |
         conda env create -f environment.yaml
+        conda init
         conda activate data_visualisation
  
         python convertcsv_test.py
