@@ -1,0 +1,9 @@
+.DS_Store
+helper_functions/__pycache__
+temp_files
+desktop.ini
+__pycache__
+.*
+!.gitignore
+!.nvmrc
+!.gitattributes

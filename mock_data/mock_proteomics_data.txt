@@ -1,0 +1,6 @@
+Protein_ID	Gene_Name	Peptide_Count	Spectral_Count	Fold_Change	p_value
+P001      	GeneA              	10           	100         	2.5   	0.01
+P002      	GeneB              	15           	150         	0.8   	0.05
+P003      	GeneC                	8           	80         	1.2   	0.03
+P004      	GeneD              	20           	200           	3 	0.001
+P005      	GeneE                	5           	50         	0.5   	0.07
