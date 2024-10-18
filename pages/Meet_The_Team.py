@@ -3,7 +3,7 @@ import streamlit as st
 st.title("Meet The Team")
 
 st.markdown(
-    """We are a group of students who are passionate about data science."""
+    """We are a group of scientists who are passionate about data science."""
 )
 
 row_1 = st.container()
@@ -92,7 +92,7 @@ with row_2_col_1:
 
 with row_2_col_2:
     st.image("images/the_team/spencer_duvwiama.jpg")
-    st.write("Sepencer Duvwiama")
+    st.write("Spencer Duvwiama")
     st.markdown(
         '<a href="https://www.linkedin.com/in/spencerduvwiama/">LinkedIn</a>',
         unsafe_allow_html=True,
