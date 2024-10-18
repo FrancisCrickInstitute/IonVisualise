@@ -40,14 +40,10 @@ def stream_data(text):
 def convert_csv(uploaded_files):
         new_files = []
         for file in uploaded_files:
-            if file.name.endswith(".csv"):
-                new_files.append(file)
-                continue
-
             if file.name.endswith(".xls"):
                 df = pd.read_excel(file)
                 
-            if file.name.endswith(".txt"):
+            elif file.name.endswith(".txt"):
                 df = pd.read_csv(file, delimiter='\t')
             
             csv_file = f"temp_files/{Path(file.name).stem}.csv"
