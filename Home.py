@@ -91,8 +91,9 @@ def homePage():
                 f"temp_files/{Path(file).name}" for file in uploaded_files
             ]
 
-    st.write(st.session_state.uploaded_data)
-    st.write(st.session_state.file_paths)
+    # TODO: To be removed
+    # st.write(st.session_state.uploaded_data)
+    # st.write(st.session_state.file_paths)
 
     # If files are uploaded, display them with an option to remove
     if st.session_state.uploaded_data:
