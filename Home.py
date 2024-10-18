@@ -11,6 +11,9 @@ from helper_functions import volcano_plot as vp
 from helper_functions.file_operations import remove_old_files
 
 st.set_page_config(initial_sidebar_state="expanded")
+st.sidebar.image(
+    "https://www.crick.ac.uk/sites/default/files/styles/media_main_column_small/public/2018-06/Francs%20Crick%20logo.png?itok=HJG_g-Hn"
+)
 
 # Create temporary directory if it doesn't exist to store uploaded files that are converted
 temp_dir = "temp_files"
