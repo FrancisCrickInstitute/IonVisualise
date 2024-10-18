@@ -1,0 +1,43 @@
+name: Test
+on:
+  push:
+  workflow_dispatch:
+ 
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -el {0}
+    steps:
+    - uses: actions/checkout@v4
+    - uses: conda-incubator/setup-miniconda@v3
+      with:
+        auto-update-conda: true
+        python-version: "3.12"
+    - name: Setup Conda
+      run: |
+        conda env create -f environment.yaml
+        conda init bash
+    - name: Convert CSV Test
+      run: |
+        conda activate data_visualisation
+        python convertcsv_test.py
+    - name: PCA Plot Test
+      run: |
+        conda activate data_visualisation
+        python pcaplot_test.py
+    - name: Scatter Plot Test
+      run: |
+        conda activate data_visualisation
+        python scatterplot_test.py
+    - name: Volcano Plot Test
+      run: |
+        conda activate data_visualisation
+        python volcanoplot_test.py
+    - name: Time Series Plot Test
+      run: |
+        conda activate data_visualisation
+        python timeseries_test.py
+ 

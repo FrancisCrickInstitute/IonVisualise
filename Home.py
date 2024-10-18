@@ -56,6 +56,7 @@ def stream_data(text):
 
 def convert_csv(uploaded_files):
     new_files = []
+    df = None
     for file in uploaded_files:
         if file.name.endswith(".csv"):
             df = pd.read_csv(file)
