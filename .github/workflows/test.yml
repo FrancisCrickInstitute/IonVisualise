@@ -12,20 +12,18 @@ jobs:
       with:
         auto-update-conda: true
         python-version: "3.12"
-    - name: Convert CSV Test
+    - name: Setup Conda
       shell: bash -el {0}
       run: |
         conda env create -f environment.yaml
         conda init bash
         conda activate data_visualisation
- 
+    - name: Convert CSV Test
+      shell: bash -el {0}
+      run: |
         python convertcsv_test.py
     - name: PCA Plot Test
       shell: bash -el {0}
       run: |
-        conda env create -f environment.yaml
-        conda init bash
-        conda activate data_visualisation
- 
         python pcaplot_test.py
  
