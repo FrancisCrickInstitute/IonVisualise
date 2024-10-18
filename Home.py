@@ -97,7 +97,7 @@ def homePage():
 
     # If files are uploaded, display them with an option to remove
     if st.session_state.uploaded_data:
-        wholepage.success("Files uploaded:")
+        wholepage.success("Files uploaded and converted:")
         for i, uploaded_file in enumerate(st.session_state.uploaded_data):
             col1, col2 = wholepage.columns([8, 1])
             col1.write(uploaded_file)
