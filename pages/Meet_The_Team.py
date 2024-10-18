@@ -110,6 +110,10 @@ with row_2_col_4:
     st.image("images/the_team/xianglu_xiao.jpg")
     st.write("Xianglu Xiao")
     st.markdown(
+        '<a href="mailto:XiangLu.xiao17@imperial.ac.uk">XiangLu.xiao17@imperial.ac.uk</a>',
+        unsafe_allow_html=True,
+    )
+    st.markdown(
         '<a href="https://www.linkedin.com/in/xianglu-xiao/">LinkedIn</a>',
         unsafe_allow_html=True,
     )
