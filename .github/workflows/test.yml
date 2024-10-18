@@ -17,13 +17,19 @@ jobs:
       run: |
         conda env create -f environment.yaml
         conda init bash
-        conda activate data_visualisation
     - name: Convert CSV Test
       shell: bash -el {0}
       run: |
+        conda activate data_visualisation
         python convertcsv_test.py
     - name: PCA Plot Test
       shell: bash -el {0}
       run: |
+        conda activate data_visualisation
         python pcaplot_test.py
+    - name: Scatter Plot Test
+      shell: bash -el {0}
+      run: |
+        conda activate data_visualisation
+        python scatterplot_test.py
  
