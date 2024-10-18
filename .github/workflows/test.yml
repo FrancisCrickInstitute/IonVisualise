@@ -1,10 +1,10 @@
-name: Convert CSV Test
+name: Test
 on:
   push:
   workflow_dispatch:
  
 jobs:
-  convert-csv-test:
+  test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -20,5 +20,12 @@ jobs:
         conda activate data_visualisation
  
         python convertcsv_test.py
+    - name: PCA Plot Test
+      shell: bash -el {0}
+      run: |
+        conda env create -f environment.yaml
+        conda init bash
+        conda activate data_visualisation
  
+        python pcaplot_test.py
  
