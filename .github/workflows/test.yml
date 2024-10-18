@@ -13,7 +13,7 @@ jobs:
         auto-update-conda: true
         python-version: "3.12"
     - name: Convert CSV Test
-      shell: bash
+      shell: bash -el {0}
       run: |
         conda env create -f environment.yaml
         conda init bash
