@@ -28,12 +28,17 @@ wholepage = st.container()
 if "uploaded_data" not in st.session_state:
     st.session_state.uploaded_data = []
 
+if "uploaded_metadata" not in st.session_state:  # Store metadata file
+    st.session_state.uploaded_metadata = None
+
 if "nav_state" not in st.session_state:
     st.session_state.nav_state = "Home"  # Default to Home page
 
 if "file_paths" not in st.session_state:
     st.session_state.file_paths = []  # To store local file paths
 
+if "metadata_file_path" not in st.session_state:
+    st.session_state.metadata_file_path = None  # To store the metadata file path
 
 def stream_data(text):
     for word in text.split(" "):
@@ -61,6 +66,14 @@ def convert_csv(uploaded_files):
         new_files.append(csv_file)
     return new_files
 
+def load_metadata():
+    """Load metadata from the saved local file."""
+    if st.session_state.metadata_file_path:
+        return load_data(st.session_state.metadata_file_path)
+    else:
+        st.warning("No metadata file uploaded.")
+        return None
+
 
 def homePage():
     wholepage.title("_Ion_:red[_Visualise_]")
@@ -77,7 +90,7 @@ def homePage():
     # If no files are uploaded, show the file uploader
     if not st.session_state.uploaded_data:
         uploaded_files = wholepage.file_uploader(
-            "Upload data",
+            "Upload data and metadata",
             type=["csv", "txt", "xls"],
             accept_multiple_files=True,
         )
@@ -89,8 +102,25 @@ def homePage():
             st.session_state.uploaded_data = [
                 Path(file).name for file in uploaded_files
             ]
-
             st.session_state.file_paths = [
+                f"temp_files/{Path(file).name}" for file in uploaded_files
+            ]
+
+    if not st.session_state.uploaded_metadata:
+        uploaded_files = wholepage.file_uploader(
+            "Upload metadata",
+            type=["csv", "txt", "xls"],
+            accept_multiple_files=True,
+        )
+
+        if uploaded_files:
+            uploaded_files = convert_csv(uploaded_files)
+
+            # Save files locally and store paths
+            st.session_state.uploaded_metadata = [
+                Path(file).name for file in uploaded_files
+            ]
+            st.session_state.metadata_file_path = [
                 f"temp_files/{Path(file).name}" for file in uploaded_files
             ]
 
@@ -113,7 +143,20 @@ def homePage():
                 os.remove(f"temp_files/{uploaded_file}")
                 st.rerun()
 
-
+        # If files are uploaded, display them with an option to remove
+        if st.session_state.uploaded_metadata:
+            wholepage.success("Files uploaded:")
+            for i, uploaded_file in enumerate(st.session_state.uploaded_metadata):
+                col3, col4 = wholepage.columns([8, 1])
+                col3.write(uploaded_file)
+                # Add an "X" button to remove the file and reset the app
+                if col3.button("X", key=f"remove_file_{i}"):
+                    st.session_state.uploaded_metadata.remove(uploaded_file)
+                    st.session_state.file_paths.remove(
+                        f"temp_files/{uploaded_file}"
+                    )
+                    os.remove(f"temp_files/{uploaded_file}")
+                    st.rerun()
 def load_data(file_path):
     """Load data from the saved local file."""
     if file_path.endswith(".csv"):
