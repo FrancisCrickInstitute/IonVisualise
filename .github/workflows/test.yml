@@ -1,0 +1,23 @@
+name: Convert CSV Test
+on:
+  push:
+  workflow_dispatch:
+ 
+jobs:
+  convert-csv-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: conda-incubator/setup-miniconda@v3
+      with:
+        auto-update-conda: true
+        python-version: "3.12"
+    - name: Convert CSV Test
+      shell: sh
+      run: |
+        conda env create -f environment.yaml
+        conda activate data_visualisation
+ 
+        python convertcsv_test.py
+ 
+ 
