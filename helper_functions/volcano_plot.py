@@ -11,6 +11,14 @@ def volcano_plot(
     threshold_fc: float = 1.0,
     threshold_pval: float = 0.05,
 ):
+    '''
+    Plot a Volcano plot using Plotly.
+    :param dataframe: The DataFrame containing the data.
+    :param fold_change_col: The column name for fold change.
+    :param p_value_col: The column name for p-values.
+    :param threshold_fc: The threshold for fold change to consider a gene differentially expressed.
+    :param threshold_pval: The threshold for p-value to consider a gene differentially expressed.
+    '''
     # Ensure the DataFrame contains the specified columns
     if (
         fold_change_col not in dataframe.columns
@@ -57,24 +65,3 @@ def volcano_plot(
 
     # Streamlit display
     st.plotly_chart(fig)
-
-def vpmain():
-    # Example usage in Streamlit app
-    st.title("Volcano Plot Example with Plotly")
-    uploaded_file = st.file_uploader("Upload your CSV file", type="csv")
-
-    if uploaded_file is not None:
-        df = pd.read_csv(uploaded_file)
-        st.write("Data Preview", df.head())
-
-        # Ask for column names for fold change and p-value
-        fold_change_col = st.text_input(
-            "Enter the column name for fold change (e.g., 'log2FoldChange')",
-            value="log2FoldChange",
-        )
-        p_value_col = st.text_input(
-            "Enter the column name for p-values (e.g., 'pvalue')", value="pvalue"
-        )
-
-        # Generate Volcano plot
-        volcano_plot(df, fold_change_col, p_value_col)
