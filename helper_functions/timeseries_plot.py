@@ -35,14 +35,3 @@ def timeseries_plot(df, selected_protein):
     # Display the plot with Streamlit
     st.plotly_chart(fig)
 
-
-def tsmain():
-    # Example usage in Streamlit app
-    st.title("Time Series Example with Plotly")
-    uploaded_file = st.file_uploader("Upload your CSV file", type="csv")
-
-    if uploaded_file is not None:
-        df = pd.read_csv(uploaded_file)
-        st.write("Data Preview", df.head())
-        # Time Series
-        timeseries_plot(df)
