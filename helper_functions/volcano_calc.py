@@ -9,11 +9,10 @@ import statsmodels.api as sm
 
 ### Define functions ###
 def stat_test(data):
-    '''
-    Calculate t test
-    :param data: dataframe: rows: samples, columns: Feature
-    :return: dataframe: rows: samples, columns: Feature","P-value, P-adjust
-    '''
+    """Calculate t test
+    Returns:
+        dataframe: rows: samples, columns: Feature","P-value, P-adjust
+    """
 
     # Input from users
     one = input("Condition 1: ")
@@ -46,12 +45,10 @@ def stat_test(data):
 
 
 def calc_fold_change(condition_1, condition_2):
-    '''
-    Calculate log fold change
-    :param condition_1: dataframe: rows: samples, columns: Feature
-    :param condition_2: dataframe: rows: samples, columns: Feature
-    :return: dataframe: return
-    '''
+    """Calculate log fold change
+    Returns:
+        dataframe: return
+    """
 
     fold_changes = np.mean(condition_1, axis=0) - np.mean(condition_2, axis=0)
     fold_changes = pd.DataFrame(fold_changes, columns=["Fold_Change"])
@@ -59,12 +56,12 @@ def calc_fold_change(condition_1, condition_2):
 
 
 def calc_volcano_plot(fold_changes, results):
-    '''
-    Make dataframe for volcano plot
-    :param fold_changes: dataframe: rows: samples, columns: Feature
-    :param results: dataframe: rows: samples, columns: Feature","P-value, P-adjust
-    :return: dataframe: rows: samples columns: columns for volcano plot
-    '''
+    """Make dataframe for volcano plot
+    Returns:
+        dataframe:
+            rows: samples
+            columns: columns for volcano plot
+    """
 
     volcano_df = pd.DataFrame.merge(
         fold_changes, results, right_index=True, left_index=True
@@ -73,10 +70,6 @@ def calc_volcano_plot(fold_changes, results):
 
 
 def main():
-    '''
-    Run the code
-    :return: dataframe: rows: samples columns: columns for volcano plot
-    '''
     ### Run code ###
 
     # Import data

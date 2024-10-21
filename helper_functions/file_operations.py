@@ -3,9 +3,6 @@ import time
 
 
 def remove_old_files(directory="temp_files", days_old=1):
-    '''
-    Remove files in a directory that are older than a certain number of days.
-    '''
     # Get the current time
     current_time = time.time()
     # Calculate how many seconds in a day
@@ -27,4 +24,7 @@ def remove_old_files(directory="temp_files", days_old=1):
 
             # If the file hasn't been modified in the past 'days_old' days, remove it
             if current_time - last_modification_time > seconds_in_day:
+                # print(
+                #     f"Removing {file_path} (last modified: {time.ctime(last_modification_time)})"
+                # )
                 os.remove(file_path)

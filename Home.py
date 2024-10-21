@@ -49,36 +49,27 @@ if "metadata_file_path" not in st.session_state:
 
 
 def stream_data(text):
-    '''
-    This function is used to stream data to the frontend.
-    '''
     for word in text.split(" "):
         yield word + " "
         time.sleep(0.02)
 
 
 def convert_csv(uploaded_files):
-    '''
-    Convert the uploaded files to CSV format.
-    :param uploaded_files: List of uploaded files
-    :return: List of new files
-    '''
     new_files = []
     df = None
     for file in uploaded_files:
         if file.name.endswith(".csv"):
             df = pd.read_csv(file)
             csv_file = f"temp_files/{file.name}"
-            new_files.append(csv_file)
-            continue
 
-        if file.name.endswith(".xls"):
-            df = pd.read_excel(file)
+        else:
+            if file.name.endswith(".xls"):
+                df = pd.read_excel(file)
 
-        if file.name.endswith(".txt"):
-            df = pd.read_csv(file, delimiter="\t")
+            if file.name.endswith(".txt"):
+                df = pd.read_csv(file, delimiter="\t")
 
-        csv_file = f"temp_files/{Path(file.name).stem}.csv"
+            csv_file = f"temp_files/{Path(file.name).stem}.csv"
 
         df.to_csv(csv_file, index=False)
         new_files.append(csv_file)
@@ -86,21 +77,15 @@ def convert_csv(uploaded_files):
 
 
 def load_metadata():
-    '''
-    Load metadata from the saved local file.
-    :return: DataFrame of metadata or nothing if no file is uploaded
-    '''
+    """Load metadata from the saved local file."""
     if st.session_state.metadata_file_path:
         return load_data(st.session_state.metadata_file_path)
-    
-    st.warning("No metadata file uploaded.")
-    return None
+    else:
+        st.warning("No metadata file uploaded.")
+        return None
 
 
 def homePage():
-    ''''
-    Shows the home page with a description and file uploader.
-    '''
     wholepage.title("_Ion_:red[_Visualise_]")
     description = """
         An advanced interface designed for the visualization of mass spectrometry proteomics data, providing a 
@@ -149,13 +134,16 @@ def homePage():
                 f"temp_files/{Path(file).name}" for file in uploaded_files
             ]
 
+    # TODO: To be removed
+    # st.write(st.session_state.uploaded_data)
+    # st.write(st.session_state.file_paths)
+
     # If files are uploaded, display them with an option to remove
     if st.session_state.uploaded_data:
         wholepage.success("Files uploaded and converted:")
         for i, uploaded_file in enumerate(st.session_state.uploaded_data):
             col1, col2 = wholepage.columns([8, 1])
             col1.write(uploaded_file)
-
             # Add an "X" button to remove the file and reset the app
             if col2.button("X", key=f"remove_file_{i}"):
                 st.session_state.uploaded_data.remove(uploaded_file)
@@ -184,9 +172,7 @@ def homePage():
 
 
 def load_data(file_path):
-    '''
-    Load data from the saved local file.
-    '''
+    """Load data from the saved local file."""
     if file_path.endswith(".csv"):
         return pd.read_csv(file_path)
     elif file_path.endswith(".xls"):
@@ -198,9 +184,6 @@ def load_data(file_path):
 
 
 def PCAPage(file_paths):
-    '''
-    Show a PCA plot for the selected dataset.
-    '''
     wholepage.title("_PCA_")
 
     file_paths = [f"{Path(file).stem}" for file in file_paths]
@@ -221,9 +204,6 @@ def PCAPage(file_paths):
 
 
 def volcanoPage(file_paths):
-    '''
-    Show a volcano plot for the selected dataset.
-    '''
     wholepage.title("_Volcano plot_")
 
     file_paths = [f"{Path(file).stem}" for file in file_paths]
@@ -242,9 +222,6 @@ def volcanoPage(file_paths):
 
 
 def scatterPage(file_paths):
-    '''
-    Show a scatter plot for the selected dataset.
-    '''
     wholepage.title("_Scatter plot_")
 
     file_paths = [f"{Path(file).stem}" for file in file_paths]
@@ -287,9 +264,6 @@ def scatterPage(file_paths):
 
 
 def timeseriesPage(file_paths):
-    '''
-    Show a timeseries plot for the selected dataset.
-    '''
     wholepage.title("_Timeseries plot_")
 
     for file_path in file_paths:
@@ -312,9 +286,6 @@ def timeseriesPage(file_paths):
 
 
 def main():
-    '''
-    Main function to run the web app.
-    '''
     nav1, nav2, nav3, nav4, nav5 = wholepage.columns(5)
 
     # Check which button is pressed and update session state
@@ -371,5 +342,6 @@ def main():
                 st.write(
                     "Oops! Something went wrong. Please let us know on GitHub!"
                 )
+
 
 main()
