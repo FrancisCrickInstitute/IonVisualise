@@ -7,6 +7,13 @@ import streamlit as st
 def scatter_with_smooth_lines(
     dataframe: pd.DataFrame, x_col: str, y_col: str, frac: float = 0.3
 ):
+    '''
+    Draw a scatter plot with smooth lines using Plotly.
+    :param dataframe: The DataFrame containing the data.
+    :param x_col: The column for the x-axis.
+    :param y_col: The column for the y-axis.
+    :param frac: The fraction of the data used when estimating each y-value.
+    '''
     # Ensure the DataFrame contains the specified columns
     if x_col not in dataframe.columns or y_col not in dataframe.columns:
         st.error(
@@ -46,19 +53,3 @@ def scatter_with_smooth_lines(
 
     # Streamlit display
     st.plotly_chart(fig)
-
-def scmain():
-    # Example usage in Streamlit app
-    st.title("Scatter Plot with Smooth Lines Example with Plotly")
-    uploaded_file = st.file_uploader("Upload your CSV file", type="csv")
-
-    if uploaded_file is not None:
-        df = pd.read_csv(uploaded_file)
-        st.write("Data Preview", df.head())
-
-        # Ask for column names for x and y axes
-        x_col = st.text_input("Enter the column name for the x-axis", value="x")
-        y_col = st.text_input("Enter the column name for the y-axis", value="y")
-
-        # Generate scatter plot with smooth lines
-        scatter_with_smooth_lines(df, x_col, y_col)
