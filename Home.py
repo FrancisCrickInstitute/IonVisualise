@@ -49,43 +49,56 @@ if "metadata_file_path" not in st.session_state:
 
 
 def stream_data(text):
+    '''
+    This function is used to stream data to the frontend.
+    '''
     for word in text.split(" "):
         yield word + " "
         time.sleep(0.02)
 
 
 def convert_csv(uploaded_files):
+    '''
+    Convert the uploaded files to CSV format.
+    :param uploaded_files: List of uploaded files
+    :return: List of new files
+    '''
     new_files = []
     df = None
     for file in uploaded_files:
         if file.name.endswith(".csv"):
             df = pd.read_csv(file)
-            csv_file = f"temp_files/{file.name}"
+        
+        if file.name.endswith(".xls"):
+            df = pd.read_excel(file)
 
-        else:
-            if file.name.endswith(".xls"):
-                df = pd.read_excel(file)
+        if file.name.endswith(".txt"):
+            df = pd.read_csv(file, delimiter="\t")
 
-            if file.name.endswith(".txt"):
-                df = pd.read_csv(file, delimiter="\t")
-
-            csv_file = f"temp_files/{Path(file.name).stem}.csv"
+        csv_file = f"temp_files/{Path(file.name).stem}.csv"
 
         df.to_csv(csv_file, index=False)
         new_files.append(csv_file)
+
     return new_files
 
 
 def load_metadata():
-    """Load metadata from the saved local file."""
+    '''
+    Load metadata from the saved local file.
+    :return: DataFrame of metadata or nothing if no file is uploaded
+    '''
     if st.session_state.metadata_file_path:
         return load_data(st.session_state.metadata_file_path)
-    else:
-        st.warning("No metadata file uploaded.")
-        return None
+    
+    st.warning("No metadata file uploaded.")
+    return None
 
 
-def homePage():
+def home_page():
+    '''
+    Shows the home page with a description and file uploader.
+    '''
     wholepage.title("_Ion_:red[_Visualise_]")
     description = """
         An advanced interface designed for the visualization of mass spectrometry proteomics data, providing a 
@@ -134,10 +147,6 @@ def homePage():
                 f"temp_files/{Path(file).name}" for file in uploaded_files
             ]
 
-    # TODO: To be removed
-    # st.write(st.session_state.uploaded_data)
-    # st.write(st.session_state.file_paths)
-
     # If files are uploaded, display them with an option to remove
     if st.session_state.uploaded_data:
         wholepage.success("Files uploaded and converted:")
@@ -172,7 +181,9 @@ def homePage():
 
 
 def load_data(file_path):
-    """Load data from the saved local file."""
+    '''
+    Load data from the saved local file.
+    '''
     if file_path.endswith(".csv"):
         return pd.read_csv(file_path)
     elif file_path.endswith(".xls"):
@@ -183,16 +194,16 @@ def load_data(file_path):
         )  # Assuming txt is tab-delimited
 
 
-def PCAPage(file_paths):
+def pca_page(file_paths):
+    '''
+    Show a PCA plot for the selected dataset.
+    '''
     wholepage.title("_PCA_")
 
     file_paths = [f"{Path(file).stem}" for file in file_paths]
     selected_data = st.selectbox("Select Dataset", file_paths)
 
-    wholepage.write(f":blue[{os.path.basename(Path(selected_data).stem)}]")
     df = load_data(f"temp_files/{selected_data}.csv")
-
-    st.dataframe(df)
 
     proteins = df.iloc[:, 0].to_numpy()
     with wholepage:
@@ -203,13 +214,15 @@ def PCAPage(file_paths):
     pca.pca_plot(df)
 
 
-def volcanoPage(file_paths):
+def volcano_page(file_paths):
+    '''
+    Show a volcano plot for the selected dataset.
+    '''
     wholepage.title("_Volcano plot_")
 
     file_paths = [f"{Path(file).stem}" for file in file_paths]
     selected_data = st.selectbox("Select Dataset", file_paths)
 
-    wholepage.write(f":blue[{os.path.basename(Path(selected_data).stem)}]")
     df = load_data(f"temp_files/{selected_data}.csv")
 
     proteins = df.iloc[:, 0].to_numpy()
@@ -221,13 +234,15 @@ def volcanoPage(file_paths):
     vp.volcano_plot(df, "Fold_Change", "p_value")
 
 
-def scatterPage(file_paths):
+def scatter_page(file_paths):
+    '''
+    Show a scatter plot for the selected dataset.
+    '''
     wholepage.title("_Scatter plot_")
 
     file_paths = [f"{Path(file).stem}" for file in file_paths]
     selected_data = st.selectbox("Select Dataset", file_paths)
 
-    wholepage.write(f":blue[{os.path.basename(Path(selected_data).stem)}]")
     df = load_data(f"temp_files/{selected_data}.csv")
 
     # Get all column names from the dataframe for selection
@@ -263,7 +278,10 @@ def scatterPage(file_paths):
     sc.scatter_with_smooth_lines(df, x_axis, y_axis)
 
 
-def timeseriesPage(file_paths):
+def timeseries_page(file_paths):
+    '''
+    Show a timeseries plot for the selected dataset.
+    '''
     wholepage.title("_Timeseries plot_")
 
     for file_path in file_paths:
@@ -286,6 +304,9 @@ def timeseriesPage(file_paths):
 
 
 def main():
+    '''
+    Main function to run the web app.
+    '''
     nav1, nav2, nav3, nav4, nav5 = wholepage.columns(5)
 
     # Check which button is pressed and update session state
@@ -303,12 +324,12 @@ def main():
     # If there are no files in session state and user tries to access another page
     if st.session_state.nav_state == "Home":
         try:
-            homePage()
+            home_page()
         except Exception:
             st.write(
                 "Oops! Something went wrong. Please let us know on GitHub!"
             )
-    elif (
+    if (
         st.session_state.nav_state
         in ["PCA", "Volcano", "Scatter", "TimeSeries"]
     ) and len(st.session_state.file_paths) == 0:
@@ -316,28 +337,28 @@ def main():
     else:
         if st.session_state.nav_state == "PCA":
             try:
-                PCAPage(st.session_state.file_paths)
+                pca_page(st.session_state.file_paths)
             except Exception:
                 st.write(
                     "Oops! Something went wrong. Please let us know on GitHub!"
                 )
-        elif st.session_state.nav_state == "Volcano":
+        if st.session_state.nav_state == "Volcano":
             try:
-                volcanoPage(st.session_state.file_paths)
+                volcano_page(st.session_state.file_paths) 
             except Exception:
                 st.write(
                     "Oops! Something went wrong. Please let us know on GitHub!"
                 )
-        elif st.session_state.nav_state == "Scatter":
+        if st.session_state.nav_state == "Scatter":
             try:
-                scatterPage(st.session_state.file_paths)
+                scatter_page(st.session_state.file_paths)
             except Exception:
                 st.write(
                     "Oops! Something went wrong. Please let us know on GitHub!"
                 )
-        elif st.session_state.nav_state == "TimeSeries":
+        if st.session_state.nav_state == "TimeSeries":
             try:
-                timeseriesPage(st.session_state.file_paths)
+                timeseries_page(st.session_state.file_paths)
             except Exception:
                 st.write(
                     "Oops! Something went wrong. Please let us know on GitHub!"
