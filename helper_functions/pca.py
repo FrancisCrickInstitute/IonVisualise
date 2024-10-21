@@ -6,6 +6,11 @@ from sklearn.preprocessing import StandardScaler
 
 
 def pca_plot(dataframe: pd.DataFrame, n_components: int = 2):
+    '''
+    Draw a PCA plot using Plotly.
+    :param dataframe: The DataFrame containing the data.
+    :param n_components: The number of principal components to use.
+    '''
     # Ensure the DataFrame only contains numerical data
     dataframe = dataframe.select_dtypes(include=[float, int])
 
@@ -36,15 +41,3 @@ def pca_plot(dataframe: pd.DataFrame, n_components: int = 2):
 
     # Streamlit display
     st.plotly_chart(fig)
-
-def pcmain():
-    # Example usage in Streamlit app
-    st.title("PCA Plot Example with Plotly")
-    uploaded_file = st.file_uploader("Upload your CSV file", type="csv")
-
-    if uploaded_file is not None:
-        df = pd.read_csv(uploaded_file)
-        st.write("Data Preview", df.head())
-
-        # Generate PCA plot
-        pca_plot(df)
