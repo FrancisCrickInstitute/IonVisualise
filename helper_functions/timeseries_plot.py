@@ -8,11 +8,6 @@ import streamlit as st
 
 
 def timeseries_plot(df, selected_protein):
-    '''
-    Plot a line plot of Peptide Count over time for the selected protein.
-    :param df: The DataFrame containing the data.
-    :param selected_protein: The selected protein to plot.
-    '''
     # Filter the DataFrame for the selected protein
     protein_df = df[df['Protein_ID'] == selected_protein]
 

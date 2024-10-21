@@ -86,22 +86,6 @@ The app should open in your web browser. If it doesn't, navigate to `http://loca
 
 If you'd like to contribute to the project, feel free to submit pull requests or open issues. We welcome all contributions that improve the functionality, design, or performance of the app.
 
-Please ensure all commits follow the [conventional commits standard](https://www.conventionalcommits.org/en/v1.0.0/) and that all pull requests to main pass all tests in the `.github/workflows/test.yml` folder.
-
-## Contacts
-
-For any issues with the repository please contact:
-- Eschal Najmi [Github](https://github.com/eschalnajmi) [Email](eschal.najmi@gmail.com)
-
-For any issues with the web application itself please contact:
-- Eschal Najmi [Github](https://github.com/eschalnajmi) [Email](eschal.najmi@gmail.com)
-- Yew Mun Yip [Github](https://github.com/yipy0005) [Email](yewmun.yip@crick.ac.uk)
-
-For any issues with data visualisation within the web app please contact:
-- Yew Mun Yip [Github](https://github.com/yipy0005) [Email](yewmun.yip@crick.ac.uk)
-- Georgia Whitton [Github](https://github.com/gwhittonx) [Email](georgia.whitton@crick.ac.uk)
-- Sara Patti [Github](https://github.com/spatts14) [Email](sara.patti@crick.ac.uk)
-- Spencer Duvwiama [Github](https://github.com/spencerejd) [Linkedin](https://www.linkedin.com/in/spencerduvwiama/)
 ## License
 
 This project is licensed under the MIT License.
