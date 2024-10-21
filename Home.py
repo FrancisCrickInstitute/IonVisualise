@@ -67,8 +67,7 @@ def convert_csv(uploaded_files):
     df = None
     for file in uploaded_files:
         if file.name.endswith(".csv"):
-            new_files.append(file)
-            continue
+            df = pd.read_csv(file)
         
         if file.name.endswith(".xls"):
             df = pd.read_excel(file)

@@ -31,7 +31,11 @@ original_file.close()
 print("::debug::Checking convert_csv output was correct")
  
 for filename in test_filename_converted_list:
-    file = open(filename, "r", encoding="utf-8")
+    try:
+        file = open(filename, "r", encoding="utf-8")
+    except Exception as e:
+        print(f"::error::Error opening file: {filename}, error is {e}")
+        sys.exit(1)
     file_content = file.read()
  
     if file_content != original_file_content:
